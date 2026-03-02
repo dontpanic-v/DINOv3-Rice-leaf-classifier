@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# datasets and trained artifacts (large, regenerable)
+/datasets/
+*.csv
+*.pth
+*.npy
+*.pkl
+
+# editors
+.obsidian/
+
+# OS
+.DS_Store
