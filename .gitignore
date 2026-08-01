@@ -15,8 +15,12 @@ venv/
 *.npy
 *.pkl
 
+# paper / docs (internal, not shipped)
+paper/
+
 # editors
 .obsidian/
+.claude/
 
 # OS
 .DS_Store
