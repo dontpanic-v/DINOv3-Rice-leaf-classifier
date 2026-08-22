@@ -1,12 +1,10 @@
-"""Hook-based Grad-CAM class activation maps for ViT blocks."""
 import torch
 
 
 class GradCAM:
     """Grad-CAM over a single ViT block via forward/backward hooks.
 
-    Use as a context manager (`with GradCAM(model, layer) as cam:`) so the
-    hooks are always released — see remove() for why that matters.
+    Use as a context manager so hooks are always released.
     """
 
     def __init__(self, model, target_layer):
@@ -23,10 +21,6 @@ class GradCAM:
     def _save_gradient(self, module, grad_input, grad_output):
         self.gradients = grad_output[0].detach()
 
-    # Release the forward/backward hooks. Without this, every GradCAM
-    # instance leaves its hooks on target_layer permanently — they pile up
-    # and keep firing (and keep activations/gradients tensors alive) on
-    # every later forward/backward pass, for the lifetime of the model.
     def remove(self):
         self._forward_handle.remove()
         self._backward_handle.remove()

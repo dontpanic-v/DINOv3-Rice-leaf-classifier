@@ -8,3 +8,5 @@ Pillow
 scikit-learn
 seaborn
 matplotlib
+pyyaml
+tensorboard

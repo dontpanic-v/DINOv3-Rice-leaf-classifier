@@ -15,6 +15,9 @@ venv/
 *.npy
 *.pkl
 
+# training outputs
+outputs/
+
 # paper / docs (internal, not shipped)
 paper/
 
