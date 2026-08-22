@@ -1,4 +1,3 @@
-"""Image file discovery, safe loading, and perceptual hashing."""
 import os
 
 import imagehash
@@ -16,7 +15,6 @@ def list_image_files(directory, extensions=IMAGE_EXTENSIONS):
     return files
 
 
-# open an image, returning None instead of raising on corrupted/unreadable files
 def safe_open_image(image_path):
     try:
         return Image.open(image_path)

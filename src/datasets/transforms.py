@@ -1,10 +1,6 @@
-"""Tier-based torchvision transform pipelines (light/moderate/heavy)."""
 import timm
 from torchvision import transforms
 
-# Each tier only lists what differs from the base pipeline (resize, flips,
-# rotation, normalize) — augmentation intensity scales with how much a
-# class needs it (see README "Why three augmentation tiers?").
 TIER_CONFIG = {
     "light": {
         "rotation_degrees": 15,
@@ -36,8 +32,6 @@ def resolve_data_config(backbone_name, input_size):
     return timm.data.resolve_model_data_config(model)
 
 
-# Build one tier's transform pipeline from TIER_CONFIG instead of a
-# separate hand-written method per tier.
 def build_transform(tier, image_size, mean, std):
     config = TIER_CONFIG[tier]
     steps = [
