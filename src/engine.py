@@ -48,8 +48,9 @@ def train_one_epoch(
         optimizer.step()
 
         acc = (logits.argmax(dim=1) == labels).float().mean().item()
-        metric_logger.update(loss=loss_value)
-        metric_logger.update(accuracy=acc)
+        batch_size = images.shape[0]
+        metric_logger.update(loss=loss_value, n=batch_size)
+        metric_logger.update(accuracy=acc, n=batch_size)
         metric_logger.update(lr=optimizer.param_groups[0]["lr"])
 
         if writer is not None:
@@ -81,8 +82,9 @@ def validate(model, data_loader, criterion, device, print_freq=10):
             loss = criterion(logits, labels)
 
         acc = (logits.argmax(dim=1) == labels).float().mean().item()
-        metric_logger.update(loss=loss.item())
-        metric_logger.update(accuracy=acc)
+        batch_size = images.shape[0]
+        metric_logger.update(loss=loss.item(), n=batch_size)
+        metric_logger.update(accuracy=acc, n=batch_size)
 
     print("averaged stats:", metric_logger)
     return {k: meter.global_avg for k, meter in metric_logger.meters.items()}
