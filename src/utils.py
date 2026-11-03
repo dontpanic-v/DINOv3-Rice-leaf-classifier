@@ -33,10 +33,12 @@ class SmoothedValue(object):
         self.count = 0
         self.fmt = fmt
 
-    def update(self, value):
+    # n = number of samples value was averaged over, so global_avg is
+    # sample-weighted (a short final batch must not count as a full one)
+    def update(self, value, n=1):
         self.deque.append(value)
-        self.total += value
-        self.count += 1
+        self.total += value * n
+        self.count += n
 
     @property
     def median(self):
@@ -76,12 +78,12 @@ class MetricLogger(object):
         self.meters = defaultdict(SmoothedValue)
         self.delimiter = delimiter
 
-    def update(self, **kwargs):
+    def update(self, n=1, **kwargs):
         for k, v in kwargs.items():
             if isinstance(v, torch.Tensor):
                 v = v.item()
             assert isinstance(v, (float, int))
-            self.meters[k].update(v)
+            self.meters[k].update(v, n=n)
 
     def __getattr__(self, attr):
         if attr in self.meters:
